@@ -80,15 +80,9 @@ func (a *App) run(ctx context.Context) (err error) {
 		return
 	}
 
-	tlsConf, err := access.LoadTLSConfig(
-		a.conf.Teleport.ClientCrt,
-		a.conf.Teleport.ClientKey,
-		a.conf.Teleport.RootCAs,
-	)
-	if trace.Unwrap(err) == access.ErrInvalidCertificate {
-		log.WithError(err).Warning("Auth client TLS configuration error")
-	} else if err != nil {
-		return
+	tlsConf, err := access.LoadTLSConfig(a.conf.Teleport)
+	if err != nil {
+		return trace.Wrap(err)
 	}
 	bk := backoff.DefaultConfig
 	bk.MaxDelay = time.Second * 2
