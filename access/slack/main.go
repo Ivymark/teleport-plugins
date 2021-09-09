@@ -39,7 +39,7 @@ func main() {
 	startCmd := app.Command("start", "Starts a the Teleport Slack plugin.")
 	path := startCmd.Flag("config", "TOML config file path").
 		Short('c').
-		Default("/etc/teleport-slack.toml").
+		Default("teleport.toml").
 		String()
 	debug := startCmd.Flag("debug", "Enable verbose logging to stderr").
 		Short('d').
